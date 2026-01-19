@@ -20,7 +20,6 @@ import AdminComments from './pages/AdminComments';
 import AdminLoginPage from './pages/AdminLoginPage';
 
 // Helper component for protected routes
-// Fixed: Making children optional in the type definition to resolve TypeScript "missing children" errors during JSX instantiation.
 const ProtectedRoute = ({ isAuthenticated, children }: { isAuthenticated: boolean, children?: React.ReactNode }) => {
   const location = useLocation();
   if (!isAuthenticated) {
@@ -81,6 +80,10 @@ export default function App() {
 
   const addComment = (comment: Comment) => setComments(prev => [comment, ...prev]);
   const deleteComment = (id: string) => setComments(prev => prev.filter(c => c.id !== id));
+  const updateComment = (id: string, updates: Partial<Comment>) => {
+    setComments(prev => prev.map(c => c.id === id ? { ...c, ...updates } : c));
+  };
+
   const updateArticle = (id: string, updates: Partial<Article>) => {
     setArticles(prev => prev.map(a => a.id === id ? { ...a, ...updates } : a));
   };
@@ -91,7 +94,7 @@ export default function App() {
         {/* Public Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage articles={articles} />} />
-          <Route path="/article/:id" element={<ArticlePage articles={articles} comments={comments} onCommentAdd={addComment} onArticleUpdate={updateArticle} />} />
+          <Route path="/article/:id" element={<ArticlePage articles={articles} comments={comments} onCommentAdd={addComment} onArticleUpdate={updateArticle} onCommentUpdate={updateComment} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/category/:category" element={<CategoryPage articles={articles} />} />
         </Route>

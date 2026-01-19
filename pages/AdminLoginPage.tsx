@@ -30,14 +30,14 @@ const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLogin, isAuthenticate
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-white serif mb-2">Lumina Admin</h1>
-          <p className="text-slate-400">Please enter your credentials to access the dashboard</p>
+          <h1 className="text-4xl font-bold text-slate-900 serif mb-2 tracking-tighter">LUMINA <span className="text-indigo-600">ADM</span></h1>
+          <p className="text-slate-500 text-sm font-medium uppercase tracking-widest">Secure Access Required</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Access Password</label>
@@ -65,12 +65,12 @@ const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLogin, isAuthenticate
           <div className="mt-8 text-center">
             <button 
               onClick={() => navigate('/')}
-              className="text-slate-400 text-sm hover:text-slate-600 transition flex items-center justify-center gap-2 mx-auto"
+              className="text-slate-400 text-xs font-bold uppercase tracking-widest hover:text-slate-600 transition flex items-center justify-center gap-2 mx-auto"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              Back to Public Site
+              Return Home
             </button>
           </div>
         </div>

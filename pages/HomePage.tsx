@@ -34,45 +34,8 @@ const HomePage: React.FC<HomePageProps> = ({ articles }) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 animate-in fade-in duration-700">
-      {/* Dynamic Header */}
-      <section className="mb-10 md:mb-16 text-center">
-        <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold serif mb-4 md:mb-6 tracking-tight">Illuminating <span className="text-indigo-600 italic">Insights</span></h1>
-        <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-4">
-          The destination for modern readers who demand depth, clarity, and visual delight.
-        </p>
-      </section>
-
-      {/* Hero Section */}
-      {featured && activeCategory === 'All' && (
-        <section className="mb-12 md:mb-20">
-          <Link to={`/article/${featured.id}`} className="group relative block overflow-hidden rounded-2xl md:rounded-3xl bg-slate-200 aspect-video md:aspect-[21/9] shadow-xl md:shadow-2xl">
-            <img 
-              src={featured.coverImage} 
-              alt={featured.title} 
-              className="absolute inset-0 w-full h-full object-cover transition duration-1000 group-hover:scale-105 group-hover:rotate-1"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 md:via-slate-900/40 to-transparent flex flex-col justify-end p-6 md:p-16">
-              <span className="bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-full w-fit mb-3 md:mb-6 tracking-widest uppercase">
-                Headline • {featured.category}
-              </span>
-              <h2 className="text-2xl md:text-4xl lg:text-6xl font-bold text-white mb-3 md:mb-6 serif group-hover:text-indigo-300 transition leading-tight max-w-4xl">
-                {featured.title}
-              </h2>
-              <p className="text-slate-300 text-sm md:text-lg max-w-2xl line-clamp-2 mb-4 md:mb-8 opacity-80 hidden sm:block">
-                {featured.excerpt}
-              </p>
-              <div className="flex items-center text-slate-400 text-xs md:text-sm font-medium">
-                <span className="text-white font-bold">{featured.author}</span>
-                <span className="mx-2 md:mx-3 opacity-30">|</span>
-                <span>{new Date(featured.status === 'scheduled' ? featured.scheduledAt! : featured.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-              </div>
-            </div>
-          </Link>
-        </section>
-      )}
-
-      {/* Categories Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-8 md:mb-12">
+      {/* Categories Tabs - Moved up for cleaner focus on content */}
+      <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-12 md:mb-16">
         {['All', ...CATEGORIES].map(cat => (
           <button 
             key={cat}
@@ -84,11 +47,37 @@ const HomePage: React.FC<HomePageProps> = ({ articles }) => {
         ))}
       </div>
 
+      {/* Hero Section */}
+      {featured && activeCategory === 'All' && (
+        <section className="mb-12 md:mb-20">
+          <Link to={`/article/${featured.id}`} className="group relative block overflow-hidden rounded-2xl md:rounded-3xl bg-slate-200 aspect-video md:aspect-[21/9] shadow-xl md:shadow-2xl">
+            <img 
+              src={featured.coverImage} 
+              alt={featured.title} 
+              className="absolute inset-0 w-full h-full object-cover transition duration-1000 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent flex flex-col justify-end p-6 md:p-16">
+              <span className="bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-full w-fit mb-3 md:mb-6 tracking-widest uppercase">
+                Featured Story • {featured.category}
+              </span>
+              <h2 className="text-2xl md:text-4xl lg:text-6xl font-bold text-white mb-3 md:mb-6 serif group-hover:text-indigo-300 transition leading-tight max-w-4xl">
+                {featured.title}
+              </h2>
+              <div className="flex items-center text-slate-300 text-xs md:text-sm font-medium">
+                <span className="text-white font-bold">{featured.author}</span>
+                <span className="mx-2 md:mx-3 opacity-30">|</span>
+                <span>{new Date(featured.status === 'scheduled' ? featured.scheduledAt! : featured.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
+
       {/* Article Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {(activeCategory === 'All' ? others : visibleArticles).map(article => (
           <article key={article.id} className="flex flex-col group animate-in slide-in-from-bottom-2 duration-500">
-            <Link to={`/article/${article.id}`} className="overflow-hidden rounded-2xl bg-slate-200 aspect-[4/3] mb-4 md:mb-6 block shadow-sm group-hover:shadow-lg transition-all duration-300">
+            <Link to={`/article/${article.id}`} className="overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3] mb-4 md:mb-6 block shadow-sm group-hover:shadow-lg transition-all duration-300 border border-slate-100">
               <img 
                 src={article.coverImage} 
                 alt={article.title} 
@@ -108,7 +97,7 @@ const HomePage: React.FC<HomePageProps> = ({ articles }) => {
             </p>
             <div className="mt-auto flex items-center justify-between pt-4 md:pt-6 border-t border-slate-100">
                <div className="flex items-center gap-2">
-                 <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                 <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-slate-100 overflow-hidden shrink-0">
                    <img src={`https://ui-avatars.com/api/?name=${article.author}&background=random`} alt={article.author} />
                  </div>
                  <span className="text-[10px] md:text-xs text-slate-700 font-bold truncate max-w-[80px] md:max-w-none">{article.author}</span>
@@ -130,8 +119,7 @@ const HomePage: React.FC<HomePageProps> = ({ articles }) => {
 
       {visibleArticles.length === 0 && (
         <div className="py-20 md:py-32 text-center text-slate-400">
-          <svg className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:mb-6 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-          <p className="text-xl md:text-2xl serif px-4">No stories found here matching your criteria.</p>
+          <p className="text-xl md:text-2xl serif px-4">No stories found matching your criteria.</p>
           <button onClick={() => setActiveCategory('All')} className="text-indigo-600 font-bold hover:underline mt-4">Show all articles</button>
         </div>
       )}

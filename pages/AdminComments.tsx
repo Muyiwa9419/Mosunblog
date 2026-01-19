@@ -29,6 +29,7 @@ const AdminComments: React.FC<AdminCommentsProps> = ({ comments, articles, onDel
                 <th className="px-6 py-4">User</th>
                 <th className="px-6 py-4">Comment</th>
                 <th className="px-6 py-4">Article</th>
+                <th className="px-6 py-4">Reactions</th>
                 <th className="px-6 py-4">Date</th>
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
@@ -49,6 +50,19 @@ const AdminComments: React.FC<AdminCommentsProps> = ({ comments, articles, onDel
                     <Link to={`/article/${comment.articleId}`} className="text-xs text-indigo-600 font-bold hover:underline">
                       {getArticleTitle(comment.articleId)}
                     </Link>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex flex-wrap gap-1">
+                      {Object.entries(comment.reactions).length > 0 ? (
+                        Object.entries(comment.reactions).map(([emoji, count]) => (
+                          <span key={emoji} className="bg-slate-100 text-[10px] px-1.5 py-0.5 rounded font-bold">
+                            {emoji} {count}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-slate-300 text-[10px]">—</span>
+                      )}
+                    </div>
                   </td>
                   <td className="px-6 py-4 text-xs text-slate-400">
                     {new Date(comment.createdAt).toLocaleDateString()}
